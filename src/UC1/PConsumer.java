@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class PConsumer extends Thread{
     Properties properties = new Properties();
-    private String topicName = "test";
+    private String topicName = "sensor";
     private String groupName = "firstGroup";
     public PConsumer(){
         properties.put("bootstrap.servers", "localhost:9092");
