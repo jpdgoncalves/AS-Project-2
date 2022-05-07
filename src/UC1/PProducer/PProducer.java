@@ -1,13 +1,11 @@
 package UC1.PProducer;
 
+import UC1.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Properties;
 
@@ -26,15 +24,16 @@ public class PProducer{
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         //Socket attributes
         Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
         String line;
+        SensorData sensorData;
         while(true)
-            if(!(line = String.valueOf(in.read())).equals("-1"))
-                System.out.println(line);
+            if((sensorData = (SensorData) in.readObject()) != null)
+                System.out.println("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
             else
                 break;
     }
