@@ -1,6 +1,7 @@
 package UC1.PProducer;
 
 import UC1.PSource.SensorData;
+import UC1.PSource.TSender;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -29,13 +30,8 @@ public class PProducer{
         Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-        String line;
-        SensorData sensorData;
-        while(true)
-            if((sensorData = (SensorData) in.readObject()) != null)
-                System.out.println("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
-            else
-                break;
+        (new TReceiver(in)).start();
+
     }
 
     public Properties getProperties() {
