@@ -2,8 +2,9 @@ package UC1.PSource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class SensorData {
+public class SensorData implements Serializable {
     private final String sensorId;
     private final String temperature;
     private final String timestamp;

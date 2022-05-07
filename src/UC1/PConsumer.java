@@ -5,9 +5,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.errors.WakeupException;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 public class PConsumer extends Thread{
@@ -24,12 +27,12 @@ public class PConsumer extends Thread{
 
     @Override
     public void run() {
-        KafkaConsumer<String, Supplier> consumer = new KafkaConsumer<>(properties);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(Arrays.asList(topicName));
         System.out.println("consumer begins !");
         while(true){
-            ConsumerRecords<String,Supplier> records = consumer.poll(50);
-            for (ConsumerRecord<String, Supplier> record : records)
+            ConsumerRecords<String,String> records = consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records)
                 System.out.println("Receive message : " + record.value());
         }
     }
