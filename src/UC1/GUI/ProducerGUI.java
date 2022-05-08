@@ -15,14 +15,22 @@ public class ProducerGUI {
         setContent("PLACEHOLDER");
 
         frame = new JFrame("Producer GUI");
-        frame.setSize(1000,400 );
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(1000,800 );
+
+        JScrollPane scroll = new JScrollPane (textArea);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        frame.add(scroll);
+
 
     }
 
     public void open() throws IOException, ClassNotFoundException {
+
         frame.setVisible(true);
     }
 

@@ -7,6 +7,8 @@ public class TUpdateGUIinfo extends Thread{
 
     private ProducerGUI gui;
 
+    private String toWrite;
+
     public TUpdateGUIinfo() throws IOException, ClassNotFoundException {
         this.gui = new ProducerGUI();
         gui.open();
@@ -16,21 +18,23 @@ public class TUpdateGUIinfo extends Thread{
     @Override
     public void run() {
 
-        final Runnable doHelloWorld = new Runnable() {
+        final Runnable writeToGUI = new Runnable() {
             public void run() {
-                gui.setContent("hi");
+                gui.setContent(toWrite);
             }
         };
 
         while (true){
             try {
-                SwingUtilities.invokeAndWait(doHelloWorld);
+                //TODO - missing receiving info from producer
+                toWrite = "hi";
+                SwingUtilities.invokeAndWait(writeToGUI);
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                sleep(1000);
+                sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
