@@ -11,22 +11,18 @@ public class TConsumer extends Thread{
     private Properties properties;
     private KafkaConsumer<String, String> consumer;
 
-    String topicName;
+    private String topicName;
 
-    public TConsumer(Properties properties){
+    public TConsumer(Properties properties, String newTopic){
         this.properties = properties;
-        this.consumer = new KafkaConsumer<>(properties);
-
-    }
-
-    public void receiveNewTopic(String topicName){
-        this.topicName = topicName;
-        consumer.subscribe(Arrays.asList(topicName));
+        this.consumer = new KafkaConsumer<>(this.properties);
+        this.topicName = newTopic;
     }
 
     @Override
     public void run() {
-        System.out.println("consumer begins with topic " + topicName + " and group id " + properties.getProperty("group.id"));
+        consumer.subscribe(Arrays.asList(topicName));
+        System.out.println("consumer begins !");
         while(true){
             ConsumerRecords<String,String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records)
