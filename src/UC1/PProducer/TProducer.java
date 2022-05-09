@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Properties;
 
-public class TReceiver extends Thread{
+public class TProducer extends Thread{
     private PProducer producer;
 
     private Properties properties = new Properties();
@@ -19,7 +19,7 @@ public class TReceiver extends Thread{
 
     private ObjectInputStream in;
 
-    public TReceiver(Properties properties, ObjectInputStream newIn){
+    public TProducer(Properties properties, ObjectInputStream newIn){
         this.properties = properties;
         this.in = newIn;
     }
