@@ -26,4 +26,13 @@ public class SensorData implements Serializable {
     public String getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "SensorData{" +
+                "sensorId='" + sensorId + '\'' +
+                ", temperature='" + temperature + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
+    }
 }

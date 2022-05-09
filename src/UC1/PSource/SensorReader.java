@@ -3,23 +3,50 @@ package UC1.PSource;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class SensorReader {
-    private final ReentrantLock monitor = new ReentrantLock();
+    private final ReentrantLock sensorsIdRegion = new ReentrantLock();
 
-    private BufferedReader fileReader;
+    private final HashMap<String, Queue<SensorData>> dataBySensorId = new HashMap<>();
+    private final Queue<String> sensorIds = new ArrayDeque<>(6);
 
     public SensorReader(String fileName) throws IOException {
-        fileReader = new BufferedReader(new FileReader(fileName));
+        BufferedReader fileReader = new BufferedReader(new FileReader(fileName));
+        SensorData data;
+
+        while ((data = readData(fileReader)) != null)
+            putData(data, dataBySensorId);
+
+        fileReader.close();
+
+        sensorIds.addAll(dataBySensorId.keySet());
     }
 
-    public SensorData readData() throws InterruptedException{
+    public String getSensorId() {
+        String sensorId;
+
+        sensorsIdRegion.lock();
+        sensorId = sensorIds.poll();
+        sensorsIdRegion.unlock();
+
+        return sensorId;
+    }
+
+    public SensorData getData(String sensorId) {
+        return dataBySensorId.get(sensorId).poll();
+    }
+
+    private static void putData(SensorData data, HashMap<String, Queue<SensorData>> dataBySensorId) {
+        if (!dataBySensorId.containsKey(data.getSensorId()))
+            dataBySensorId.put(data.getSensorId(), new ArrayDeque<>());
+
+        dataBySensorId.get(data.getSensorId()).add(data);
+    }
+
+    private static SensorData readData(BufferedReader fileReader) {
         String sensorId, temperature, timestamp;
-
-        monitor.lockInterruptibly();
-
-        if (fileReader == null) return null;
 
         try {
             if ((sensorId = fileReader.readLine()) == null) return null;
@@ -27,27 +54,9 @@ public class SensorReader {
             if ((timestamp = fileReader.readLine()) == null) return null;
         } catch (IOException e) {
             e.printStackTrace();
-            cleanup();
             return null;
         }
 
-        monitor.unlock();
-
         return new SensorData(sensorId, temperature, timestamp);
-    }
-
-    public void close() {
-        monitor.lock();
-        cleanup();
-        monitor.unlock();
-    }
-
-    private void cleanup() {
-        try {
-            fileReader.close();
-            fileReader = null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

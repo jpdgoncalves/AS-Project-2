@@ -12,8 +12,10 @@ public class PSource {
         SensorReader sensorReader = new SensorReader("sensor.txt");
         ServerSocket serverSocket = new ServerSocket(PSOURCE_PORT);
 
+        System.out.println("PSource process is running!");
         while (true) {
             Socket socket = serverSocket.accept();
+            System.out.println("Accepted a new socket connection! Starting thread...");
             (new TSender(socket, sensorReader)).start();
         }
 
