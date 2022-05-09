@@ -5,12 +5,10 @@ import java.io.IOException;
 public class MainGUI {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-       TUpdateGUIinfo producergui = new TUpdateGUIinfo("P");
-        producergui.start();
 
-       TUpdateGUIinfo consumergui = new TUpdateGUIinfo("C");
-        consumergui.start();
+       UpdateGUI producergui = new UpdateGUI("P");
 
+       UpdateGUI consumergui = new UpdateGUI("C");
 
        //test code
        while (true){
