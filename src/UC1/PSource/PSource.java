@@ -12,10 +12,8 @@ public class PSource {
         SensorReader sensorReader = new SensorReader("sensor.txt");
         ServerSocket serverSocket = new ServerSocket(PSOURCE_PORT);
 
-        while (true) {
-            Socket socket = serverSocket.accept();
-            (new TSender(socket, sensorReader)).start();
-        }
+        Socket socket = serverSocket.accept();
+        (new TSender(socket, sensorReader)).start();
 
     }
 }
