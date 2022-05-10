@@ -10,8 +10,6 @@ import java.io.ObjectInputStream;
 import java.util.Properties;
 
 public class TProducer extends Thread{
-    private PProducer producer;
-
     private Properties properties;
     private String topicName = "sensor";
     private String key = "key";
