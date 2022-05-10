@@ -1,4 +1,4 @@
-package UC2.PProducer;
+package UC3.PProducer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,19 +17,19 @@ public class PProducer{
 
 
 
-        TProducer producers[] = new TProducer[6];
+        TProducer producers[] = new TProducer[3];
 
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        //records can be lost and also minimize latency
+        //records can be lost :
         props.put("acks", "0");
-        //to minimize the possibility of losing all records of a sensor ID without deteriorating the performance
-        props.put("retries", "1");
+        //to make performance better since records can be lost
+        props.put("retries", "0");
 
-        //starting 6 producers
-        for (int i=0; i<6; i++){
+        //starting 3 producers
+        for (int i=0; i<3; i++){
             //Socket attributes
             Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
