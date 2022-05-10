@@ -12,7 +12,7 @@ import java.util.Properties;
 public class TProducer extends Thread{
     private PProducer producer;
 
-    private Properties properties = new Properties();
+    private Properties properties;
     private String topicName = "sensor";
     private String key = "key";
     private String value = "";
@@ -30,21 +30,14 @@ public class TProducer extends Thread{
 
         System.out.println("producer "+ this.getId() +" sent record to topic !!");
 
-
         SensorData sensorData;
         try {
             while(true) {
-
-    //                if(( != null){
-                        sensorData = (SensorData) in.readObject();
-                        value = "id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp();
-                        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
-                        producer.send(producerRecord);
-                        System.out.println("producer "+ this.getId() + "sent id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
-    //                }
-    //                else
-    //                    break;
-
+                sensorData = (SensorData) in.readObject();
+                value = "id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp();
+                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
+                producer.send(producerRecord);
+                System.out.println("producer "+ this.getId() + "sent id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
             }
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
