@@ -18,8 +18,11 @@ public class SensorReader {
         BufferedReader fileReader = new BufferedReader(new FileReader(fileName));
         SensorData data;
 
-        while ((data = readData(fileReader)) != null)
-            putData(data, dataBySensorId);
+        createKeys(sensorIds, dataBySensorId);
+
+        while ( (data = readData(fileReader)) != null ) {
+            dataBySensorId.get(data.getSensorId()).add(data);
+        }
 
         fileReader.close();
 
@@ -31,6 +34,7 @@ public class SensorReader {
 
         sensorsIdRegion.lock();
         sensorId = sensorIds.poll();
+        sensorIds.poll();
         sensorsIdRegion.unlock();
 
         return sensorId;
@@ -40,11 +44,15 @@ public class SensorReader {
         return dataBySensorId.get(sensorId).poll();
     }
 
-    private static void putData(SensorData data, HashMap<String, Queue<SensorData>> dataBySensorId) {
-        if (!dataBySensorId.containsKey(data.getSensorId()))
-            dataBySensorId.put(data.getSensorId(), new ArrayDeque<>());
+    private static void createKeys(Queue<String> sensorIds , HashMap<String, Queue<SensorData>> dataBySensorId) {
+        for (int i = 0; i < 6; i += 2) {
+            Queue<SensorData> queue = new ArrayDeque<>();
 
-        dataBySensorId.get(data.getSensorId()).add(data);
+            sensorIds.add("00000" + i);
+            sensorIds.add("00000" + (i + 1));
+            dataBySensorId.put("00000" + i, queue);
+            dataBySensorId.put("00000" + (i + 1), queue);
+        }
     }
 
     private static SensorData readData(BufferedReader fileReader) {
