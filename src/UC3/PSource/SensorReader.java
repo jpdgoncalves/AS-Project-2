@@ -45,7 +45,7 @@ public class SensorReader {
     }
 
     private static void createKeys(Queue<String> sensorIds , HashMap<String, Queue<SensorData>> dataBySensorId) {
-        for (int i = 0; i < 6; i += 2) {
+        for (int i = 1; i < 6; i += 2) {
             Queue<SensorData> queue = new ArrayDeque<>();
 
             sensorIds.add("00000" + i);
