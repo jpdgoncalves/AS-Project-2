@@ -1,6 +1,6 @@
-package UC3.PProducer;
+package UC4.PProducer;
 
-import UC3.PSource.SensorData;
+import UC4.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
