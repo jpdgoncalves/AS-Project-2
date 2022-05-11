@@ -28,7 +28,7 @@ public class PProducer{
         props.put("acks", "1");
 
         //minimize the possibility of losing records
-        props.put("retries", "3");
+        props.put("retries", "4");
 
         //starting 3 producers
         for (int i=0; i<6; i++){

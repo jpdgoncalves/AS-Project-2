@@ -26,10 +26,11 @@ public class PProducer{
 
         //minimize the possibility of losing records but while minimizing the impact on the overall performance
         props.put("acks", "1");
+
         //minimize the possibility of losing records but while minimizing the impact on the overall performance
         props.put("retries", "2");
 
-        //high throughput
+        //maximum throughput
         props.put("max.in.flight.requests.per.connection", "10");
 
         //starting 3 producers

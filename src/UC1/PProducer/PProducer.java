@@ -21,10 +21,15 @@ public class PProducer{
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
         //records can be lost :
         props.put("acks", "0");
+
         //to make performance better since records can be lost
         props.put("retries", "0");
+
+        //to make sure they are ordered
+        props.put("max.in.flight.requests.per.connection", "1");
 
         (new TProducer(props, in)).start();
 

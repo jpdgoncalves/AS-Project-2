@@ -23,10 +23,15 @@ public class PProducer{
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        //records can be lost and also minimize latency
-        props.put("acks", "0");
+
+        //some records can be lost, but minimize the possibility of losing all records of a sensor ID
+        props.put("acks", "1");
+
         //to minimize the possibility of losing all records of a sensor ID without deteriorating the performance
         props.put("retries", "1");
+
+        //minimize latency
+        props.put("delivery.timeout.ms", "10000");
 
         //starting 6 producers
         for (int i=0; i<6; i++){
