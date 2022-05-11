@@ -20,8 +20,8 @@ public class PConsumer{
 
 
 
-        TConsumer consumers[] = new TConsumer[3];
-        for (int i=0; i<3; i++){
+        TConsumer consumers[] = new TConsumer[6];
+        for (int i=0; i<6; i++){
             TopicPartition topicPartition = new TopicPartition(topicName, i);
             List<TopicPartition> asList = Arrays.asList(topicPartition);
 

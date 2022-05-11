@@ -24,10 +24,10 @@ public class PProducer{
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        //TODO: verify below if working because it is supposed to be working with in-sync replicas : https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
-        //records cannot be lost :
-        props.put("acks", "all");
-        //to make sure as much as possible that records are not lost
+        //minimize the possibility of losing records
+        props.put("acks", "1");
+
+        //minimize the possibility of losing records
         props.put("retries", "3");
 
         //starting 3 producers
