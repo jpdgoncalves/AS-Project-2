@@ -18,6 +18,8 @@ public class PConsumer{
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
+        //records can be reprocessed but avoiding some degree of reprocessing
+        props.put("auto.commit.interval.ms", "5000");
 
 
         TConsumer consumers[] = new TConsumer[3];

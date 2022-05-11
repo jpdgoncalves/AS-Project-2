@@ -23,10 +23,14 @@ public class PProducer{
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        //records can be lost :
-        props.put("acks", "0");
-        //to make performance better since records can be lost
-        props.put("retries", "0");
+
+        //minimize the possibility of losing records but while minimizing the impact on the overall performance
+        props.put("acks", "1");
+        //minimize the possibility of losing records but while minimizing the impact on the overall performance
+        props.put("retries", "2");
+
+        //high throughput
+        props.put("max.in.flight.requests.per.connection", "10");
 
         //starting 3 producers
         for (int i=0; i<3; i++){
@@ -35,6 +39,8 @@ public class PProducer{
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
+//            TProducer producer = (new TProducer(props, in));
+//            producer.start();
             producers[i] = (new TProducer(props, in));
             producers[i].start();
         }
