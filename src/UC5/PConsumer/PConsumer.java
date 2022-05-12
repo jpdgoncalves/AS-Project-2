@@ -77,18 +77,18 @@ public class PConsumer{
     }
 
     public static void writeResults(int groupNumber, float result_min, float result_max){
-
-        if (results_min[groupNumber] > result_min ){
+        //System.out.println("hello");
+        //if (results_min[groupNumber] > result_min ){
             results_min[groupNumber] = result_min;
-        }
+        //}
 
-        if (results_max[groupNumber] < result_max){
+        //if (results_max[groupNumber] < result_max){
             results_max[groupNumber] = result_max;
-        }
+        //}
 
         added ++;
         //System.out.println("Added ++  -" + added);
-        if (added == 3*3){
+        if (added == 3){
             System.out.println("Going to vote rn");
             votingSystem();
         }

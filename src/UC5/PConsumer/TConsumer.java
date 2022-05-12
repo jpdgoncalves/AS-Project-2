@@ -1,6 +1,5 @@
 package UC5.PConsumer;
 
-import UC5.PConsumer.PConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -24,6 +23,7 @@ public class TConsumer extends Thread{
     private int groupNumber;
 
 
+
     private String topicName;
 
     public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber){
@@ -32,6 +32,7 @@ public class TConsumer extends Thread{
         //this.topicName = newTopic;
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
+
 
     }
 
@@ -44,7 +45,9 @@ public class TConsumer extends Thread{
 
         System.out.println("consumer begins !");
         while(stillRunning){
+
             ConsumerRecords<String,String> records = consumer.poll(100);
+
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
 
@@ -72,7 +75,7 @@ public class TConsumer extends Thread{
 
         }
 
-        System.out.println("Min temp is " + min_temp);
+        System.out.println(groupNumber + " - Min temp is " + min_temp);
         System.out.println("Max temp is " + max_temp);
 
         PConsumer.writeResults(groupNumber, min_temp, max_temp);
