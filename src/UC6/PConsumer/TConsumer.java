@@ -9,11 +9,24 @@ import java.util.List;
 import java.util.Properties;
 
 import static java.lang.Float.parseFloat;
-
+/**
+ * Consumer thread generated from PProducer
+ */
 public class TConsumer extends Thread{
+
+    /**
+     * The properties of the TConsumer
+     */
     private Properties properties;
+
+    /**
+     * The Kafka TConsumer
+     */
     private KafkaConsumer<String, String> consumer;
 
+    /**
+     * The list of partitions from which the consumer is going to read
+     */
     private List<TopicPartition> topicPartitions;
 
     private boolean stillRunning = true;
@@ -22,19 +35,21 @@ public class TConsumer extends Thread{
     private int count_temps = 0;
     private int groupNumber;
 
-
-
-    private String topicName;
-
-    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber){
+    /**
+     * Constructor
+     * @param properties The properties of the TConsumer we create
+     * @param topicPartitions The list of partitions from which the consumer is going to read
+     */
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
-
-
     }
 
+    /**
+     * The routine that will be done by each Consumer thread
+     */
     @Override
     public void run() {
         consumer.assign(topicPartitions);
@@ -47,7 +62,6 @@ public class TConsumer extends Thread{
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
 
-
                 if (record.value().split(" ").length != 1) {
                     float curr_temp = parseFloat(record.value().split(" ")[1].split("=")[1]);
 
@@ -55,20 +69,14 @@ public class TConsumer extends Thread{
                     count_temps ++;
 
                 } else {
-
                     stillRunning = false;
 
                     sum_temps = sum_temps / count_temps;
                     System.out.println("The average temperature is " + sum_temps);
-
                 }
-
             }
-
             consumer.commitAsync();
-
         }
         consumer.commitSync();
-
     }
 }

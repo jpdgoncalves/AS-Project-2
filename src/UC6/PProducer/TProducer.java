@@ -15,14 +15,20 @@ import java.util.concurrent.ExecutionException;
  */
 public class TProducer extends Thread{
 
-    private Properties properties; //the properties of the TProducer
+    /**
+     * The properties of the TProducer
+     */
+    private Properties properties;
 
-    private String topicName = "sensor"; //the topicName to which the TProducer will write
+    /**
+     * The topicName to which the TProducer will write
+     */
+    private String topicName = "sensor";
 
     private String key = "key";
     private String value = "";
 
-    private ObjectInputStream in; // The ObjectInputStream used for reading the sensor data from PSource
+    private ObjectInputStream in;
 
     /**
      * @param properties the properties of the TProducer we create

@@ -6,11 +6,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Class in which consumers are managed
+ */
 public class PConsumer{
 
-    private static float [] results_min = {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE};
-    private static float [] results_max = {-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE};
+    /**
+     * Each group put the minimum temperature found at the position corresponding to his number
+     */
+    private static float [] results_min;
 
+    /**
+     * Each group put the maximum temperature found at the position corresponding to his number
+     */
+    private static float [] results_max;
+
+    /**
+     * Number of groups having put their max and min temperature
+     */
     private static int added = 0;
 
     public static void main(String[] args) {
@@ -23,15 +36,9 @@ public class PConsumer{
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        //in case a kafka consumer crashes (=consumer idle more than 10 seconds), connection is closed
-//        props.put("connections.max.idle.ms", "5000");
-        //records can be reprocessed :
-//        props.put("auto.commit.interval.ms", "100");
-
-
-
-
-        //Group 1
+        /**
+         * Starting 3 consumers
+         */
         TConsumer consumers[] = new TConsumer[3];
         for (int i=0; i<3; i++){
             TopicPartition topicPartition = new TopicPartition(topicName, i);
@@ -40,11 +47,5 @@ public class PConsumer{
             consumers[i] = new TConsumer(props, asList, 0);
             consumers[i].start();
         }
-
-
     }
-
-
-
-
 }
