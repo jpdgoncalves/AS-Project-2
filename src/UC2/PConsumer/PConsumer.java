@@ -35,8 +35,5 @@ public class PConsumer{
             consumers[i] = new TConsumer(props, asList);
             consumers[i].start();
         }
-
     }
-
-
 }

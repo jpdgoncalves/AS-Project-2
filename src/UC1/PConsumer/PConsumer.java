@@ -20,6 +20,4 @@ public class PConsumer{
         TConsumer consumer = new TConsumer(props, topicName);
         consumer.start();
     }
-
-
 }
