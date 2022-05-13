@@ -27,11 +27,8 @@ public class PProducer{
         //some records can be lost, but minimize the possibility of losing all records of a sensor ID
         props.put("acks", "1");
 
-        //to minimize the possibility of losing all records of a sensor ID without deteriorating the performance
+        //to minimize the possibility of losing all records of a sensor ID without deteriorating the performance and minimize the latency
         props.put("retries", "1");
-
-        //minimize latency
-        props.put("delivery.timeout.ms", "10000");
 
         //starting 6 producers
         for (int i=0; i<6; i++){
