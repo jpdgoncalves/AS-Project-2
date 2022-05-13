@@ -10,4 +10,4 @@ pkill -f "kafka"
 
 rm -r /tmp/kafka-logs/
 rm -r /tmp/zookeeper/
-rm $KAFKA_FOLDER/logs/*
+rm "$KAFKA_FOLDER/logs/*"
