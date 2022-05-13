@@ -9,13 +9,19 @@ public class PSource {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        SensorReader sensorReader = new SensorReader("sensor.txt");
+        MSensorDataBuffer dataBuffer = new MSensorDataBuffer();
         ServerSocket serverSocket = new ServerSocket(PSOURCE_PORT);
 
+        System.out.println("Server has started...");
+
         Socket socket = serverSocket.accept();
-        TSender senderThread = new TSender(socket, sensorReader);
+        TSender senderThread = new TSender(socket, dataBuffer);
+        TReader readerThread = new TReader("sensor.txt", dataBuffer);
 
         senderThread.start();
+        readerThread.start();
+
         senderThread.join();
+        readerThread.join();
     }
 }
