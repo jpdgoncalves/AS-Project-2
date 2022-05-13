@@ -17,8 +17,6 @@ public class TProducer extends Thread{
 
     private Properties properties; //the properties of the TProducer
 
-
-
     private String topicName = "sensor"; //the topicName to which the TProducer will write
 
     private String key = "key";
@@ -62,6 +60,5 @@ public class TProducer extends Thread{
         }finally {
             producer.close();
         }
-
     }
 }

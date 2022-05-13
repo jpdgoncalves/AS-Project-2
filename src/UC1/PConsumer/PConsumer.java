@@ -1,12 +1,10 @@
 package UC1.PConsumer;
 
-import UC1.PProducer.TProducer;
-
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.Properties;
 
+/**
+ * Class in which consumers are managed
+ */
 public class PConsumer{
 
     public static void main(String[] args) {

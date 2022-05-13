@@ -4,17 +4,25 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Properties;
 
+/**
+ * Class in which producers are managed
+ */
 public class PProducer{
 
-
+    /**
+     * The port on which we retrieve data from PSource
+     */
     public static final int PSOURCE_PORT = 13000;
+
+    /**
+     * The address on which we retrieve data from PSource
+     */
     public static final String IP_ADDRESS = "127.0.0.1";
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //Socket attributes
         Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
         Properties props = new Properties();
@@ -31,6 +39,7 @@ public class PProducer{
         //to make sure they are ordered
         props.put("max.in.flight.requests.per.connection", "1");
 
+        //Start the producer thread
         (new TProducer(props, in)).start();
 
     }

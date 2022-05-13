@@ -4,8 +4,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Class in which the reading and sending data from sensor.txt is managed
+ */
 public class PSource {
+
+    /**
+     * The port on which we send data to PProducer
+     */
     public static final int PSOURCE_PORT = 13000;
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
