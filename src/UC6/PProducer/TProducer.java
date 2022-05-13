@@ -10,19 +10,34 @@ import java.io.ObjectInputStream;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Producer thread generated from PProducer
+ */
 public class TProducer extends Thread{
-    private Properties properties;
-    private String topicName = "sensor";
+
+    private Properties properties; //the properties of the TProducer
+
+
+
+    private String topicName = "sensor"; //the topicName to which the TProducer will write
+
     private String key = "key";
     private String value = "";
 
-    private ObjectInputStream in;
+    private ObjectInputStream in; // The ObjectInputStream used for reading the sensor data from PSource
 
+    /**
+     * @param properties the properties of the TProducer we create
+     * @param newIn the ObjectInputStream used for reading the sensor data from PSource
+     */
     public TProducer(Properties properties, ObjectInputStream newIn){
         this.properties = properties;
         this.in = newIn;
     }
 
+    /**
+     * The routine that will be done by each Producer thread
+     */
     @Override
     public void run() {
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
