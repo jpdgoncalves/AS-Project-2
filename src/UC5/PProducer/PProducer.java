@@ -30,7 +30,7 @@ public class PProducer{
         //to make sure as much as possible that records are not lost
         props.put("retries", "3");
 
-        //starting 3 producers
+        //starting 6 producers
         for (int i=0; i<6; i++){
             //Socket attributes
             Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
