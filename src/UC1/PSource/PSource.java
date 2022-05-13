@@ -14,7 +14,12 @@ public class PSource {
      */
     public static final int PSOURCE_PORT = 13000;
 
-
+    /**
+     * The main method invoked starting the PSource process
+     * @param args
+     * @throws IOException If the sensor data file couldn't be read.
+     * @throws InterruptedException If any of the threads are interrupted.
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
 
         MSensorDataBuffer dataBuffer = new MSensorDataBuffer();

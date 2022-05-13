@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Thread responsible for reading data from the buffer
+ * and sending that data to the socket to which some producer
+ * is connected to.
+ */
 public class TSender extends Thread {
 
     private final ObjectOutputStream out;
@@ -16,6 +21,11 @@ public class TSender extends Thread {
         setDaemon(true);
     }
 
+    /**
+     * Routine run by this thread. Until either there
+     * is nothing left to read or the thread gets
+     * interrupted.
+     */
     @Override
     public void run() {
         this.log("Started!");
@@ -43,6 +53,10 @@ public class TSender extends Thread {
         this.log("Ended!");
     }
 
+    /**
+     * Internal routine to clean up the resources
+     * used by this thread (aka close the socket).
+     */
     private void cleanup() {
         try {
             this.out.close();
@@ -52,6 +66,10 @@ public class TSender extends Thread {
         this.log("Finished cleanup!");
     }
 
+    /**
+     * Utility method to log a message
+     * @param msg The message to log
+     */
     private void log(String msg) {
         System.out.println("[Sender thread " + this.getId() + "]: " + msg);
     }

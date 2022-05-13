@@ -4,11 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Thread responsible for reading all the
+ * sensor data into a buffer.
+ */
 public class TReader extends Thread {
 
     private BufferedReader fileReader;
     private final MSensorDataBuffer dataBuffer;
 
+    /**
+     * Creates a new reader thread for the specified
+     * sensor data file.
+     * @param fileName The name of the file to read.
+     * @param dataBuffer The buffer into which the data will be feed.
+     * @throws IOException When by any reason the data file could not be opened.
+     */
     public TReader(String fileName, MSensorDataBuffer dataBuffer) throws IOException {
         fileReader = new BufferedReader(new FileReader(fileName));
         this.dataBuffer = dataBuffer;
@@ -16,6 +27,11 @@ public class TReader extends Thread {
         setDaemon(true);
     }
 
+    /**
+     * The thread's routine to read the file. It will
+     * end when either the thread is interrupted or
+     * there is no more data to read.
+     */
     @Override
     public void run() {
         this.log("Started!");
@@ -36,6 +52,12 @@ public class TReader extends Thread {
         this.log("Stopped!");
     }
 
+    /**
+     * Private method responsible for reading from the file
+     * and parsing the data into a {@link SensorData} instance
+     * @return The instance of {@link SensorData} read from the file
+     * or null if there is nothing left to read or an error occurred.
+     */
     private SensorData readData() {
         String sensorId, temperature, timestamp;
 
@@ -53,6 +75,10 @@ public class TReader extends Thread {
         return new SensorData(sensorId, temperature, timestamp);
     }
 
+    /**
+     * Private routine called to free resources used
+     * by this thread.
+     */
     private void cleanup() {
         dataBuffer.markAsDone();
 
@@ -66,6 +92,10 @@ public class TReader extends Thread {
         this.log("Finished cleaning up!");
     }
 
+    /**
+     * Utility method to log a message
+     * @param msg The message to log
+     */
     private void log(String msg) {
         System.out.println("[Reader thread " + this.getId() + "]: " + msg);
     }

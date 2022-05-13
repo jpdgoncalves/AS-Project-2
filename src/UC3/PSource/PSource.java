@@ -4,10 +4,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Class in which the reading and sending data from sensor.txt is managed
+ */
 public class PSource {
     private static final int PSOURCE_PORT = 13000;
     private static final int producerCount = 3;
 
+    /**
+     * The main method invoked starting the PSource process
+     * @param args
+     * @throws IOException If the sensor data file couldn't be read.
+     * @throws InterruptedException If any of the threads are interrupted.
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
 
         DataBufferMap buffers = new DataBufferMap();
