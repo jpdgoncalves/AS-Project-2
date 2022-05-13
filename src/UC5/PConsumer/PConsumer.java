@@ -1,7 +1,9 @@
 package UC5.PConsumer;
 
+import UC5.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PConsumer{
@@ -11,8 +13,14 @@ public class PConsumer{
 
     private static int added = 0;
 
+    private static UpdateGUI consumergui0;
+    private static UpdateGUI consumergui1;
+    private static UpdateGUI consumergui2;
+
+
     public static void main(String[] args) {
         String topicName = "sensor";
+
         String groupName = "firstGroup";
 
         Properties props = new Properties();
@@ -23,8 +31,14 @@ public class PConsumer{
         //records can be reprocessed :
         props.put("auto.commit.interval.ms", "5000");
 
+        try {
+            consumergui0 = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
-        String topicName2 = "sensor";
         String groupName2 = "sndGroup";
 
         Properties props2 = new Properties();
@@ -35,8 +49,14 @@ public class PConsumer{
         //records can be reprocessed :
         props2.put("auto.commit.interval.ms", "5000");
 
+        try {
+            consumergui1 = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
-        String topicName3 = "sensor";
         String groupName3 = "trdGroup";
 
         Properties props3 = new Properties();
@@ -47,6 +67,14 @@ public class PConsumer{
         //records can be reprocessed :
         props3.put("auto.commit.interval.ms", "2000");
 
+        try {
+            consumergui2 = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
 
         //Group 1
         TConsumer consumers[] = new TConsumer[3];
@@ -54,27 +82,27 @@ public class PConsumer{
             TopicPartition topicPartition = new TopicPartition(topicName, i);
             List<TopicPartition> asList = Arrays.asList(topicPartition);
 
-            consumers[i] = new TConsumer(props, asList, 0);
+            consumers[i] = new TConsumer(props, asList, 0, consumergui0);
             consumers[i].start();
         }
 
         //Group 2
         TConsumer consumers2[] = new TConsumer[3];
         for (int i=0; i<3; i++){
-            TopicPartition topicPartition2 = new TopicPartition(topicName2, i);
+            TopicPartition topicPartition2 = new TopicPartition(topicName, i);
             List<TopicPartition> asList2 = Arrays.asList(topicPartition2);
 
-            consumers2[i] = new TConsumer(props2, asList2, 1);
+            consumers2[i] = new TConsumer(props2, asList2, 1, consumergui1);
             consumers2[i].start();
         }
 
         //Group 3
         TConsumer consumers3[] = new TConsumer[3];
         for (int i=0; i<3; i++){
-            TopicPartition topicPartition3 = new TopicPartition(topicName3, i);
+            TopicPartition topicPartition3 = new TopicPartition(topicName, i);
             List<TopicPartition> asList3 = Arrays.asList(topicPartition3);
 
-            consumers3[i] = new TConsumer(props3, asList3, 2);
+            consumers3[i] = new TConsumer(props3, asList3, 2, consumergui2);
             consumers3[i].start();
         }
 

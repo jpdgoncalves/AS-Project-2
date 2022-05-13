@@ -1,7 +1,9 @@
 package UC6.PConsumer;
 
+import UC6.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -13,6 +15,8 @@ public class PConsumer{
 
     private static int added = 0;
 
+    private static UpdateGUI consumergui;
+
     public static void main(String[] args) {
         String topicName = "sensor";
         String groupName = "firstGroup";
@@ -22,6 +26,14 @@ public class PConsumer{
         props.put("group.id", groupName);
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
+        try {
+            consumergui = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         //in case a kafka consumer crashes (=consumer idle more than 10 seconds), connection is closed
 //        props.put("connections.max.idle.ms", "5000");
@@ -37,7 +49,7 @@ public class PConsumer{
             TopicPartition topicPartition = new TopicPartition(topicName, i);
             List<TopicPartition> asList = Arrays.asList(topicPartition);
 
-            consumers[i] = new TConsumer(props, asList, 0);
+            consumers[i] = new TConsumer(props, asList, 0, consumergui);
             consumers[i].start();
         }
 

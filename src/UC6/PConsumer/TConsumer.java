@@ -37,25 +37,18 @@ public class TConsumer extends Thread{
 
     private String topicName;
 
-    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber){
+    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber, UpdateGUI consumergui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
+        this.consumergui = consumergui;
 
 
     }
 
     @Override
     public void run() {
-
-        try {
-            consumergui = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         consumer.assign(topicPartitions);
 
