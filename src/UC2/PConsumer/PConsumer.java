@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Class in which consumers are managed
+ */
 public class PConsumer{
 
     public static void main(String[] args) {
@@ -15,15 +18,15 @@ public class PConsumer{
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("group.id", groupName);
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         //records can be reprocessed
         props.put("auto.commit.interval.ms", "1000");
 
-        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-
-
-
+        /**
+         * Starting 6 consumer threads as requested in the assignment
+         */
         TConsumer consumers[] = new TConsumer[6];
         for (int i=0; i<6; i++){
             TopicPartition topicPartition = new TopicPartition(topicName, i);

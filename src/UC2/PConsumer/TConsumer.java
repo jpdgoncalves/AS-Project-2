@@ -17,17 +17,23 @@ public class TConsumer extends Thread{
 
     private String topicName;
 
-    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions){
+    /**
+     * Constructor
+     * @param properties The properties of the TConsumer we create
+     * @param topicPartitions the list of partitions
+     */
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
-        //this.topicName = newTopic;
         this.topicPartitions = topicPartitions;
 
     }
 
+    /**
+     * The routine that will be done by each Consumer thread
+     */
     @Override
     public void run() {
-        //consumer.subscribe(Arrays.asList(topicName));
         consumer.assign(topicPartitions);
 
         System.out.println("consumer begins !");

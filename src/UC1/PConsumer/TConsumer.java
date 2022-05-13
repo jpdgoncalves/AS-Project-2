@@ -39,7 +39,7 @@ public class TConsumer extends Thread{
     }
 
     /**
-     * The routine that will be done by each Producer thread
+     * The routine that will be done by each Consumer thread
      */
     @Override
     public void run() {
