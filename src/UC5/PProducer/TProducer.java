@@ -43,7 +43,6 @@ public class TProducer extends Thread{
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
             producer.send(producerRecord);
 
-            throw new RuntimeException(e);
         }finally {
             producer.close();
         }

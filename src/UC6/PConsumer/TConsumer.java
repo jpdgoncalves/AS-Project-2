@@ -29,7 +29,6 @@ public class TConsumer extends Thread{
     public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
-        //this.topicName = newTopic;
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
 
@@ -38,10 +37,7 @@ public class TConsumer extends Thread{
 
     @Override
     public void run() {
-        //consumer.subscribe(Arrays.asList(topicName));
         consumer.assign(topicPartitions);
-
-
 
         System.out.println("consumer begins !");
         while(stillRunning){
@@ -50,8 +46,6 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
-
-                //System.out.println("nr 3???? - " + record.value().split(" ")[1].split("=")[1]);
 
 
                 if (record.value().split(" ").length != 1) {
@@ -62,8 +56,6 @@ public class TConsumer extends Thread{
 
                 } else {
 
-
-
                     stillRunning = false;
 
                     sum_temps = sum_temps / count_temps;
@@ -73,7 +65,10 @@ public class TConsumer extends Thread{
 
             }
 
+            consumer.commitAsync();
+
         }
+        consumer.commitSync();
 
     }
 }

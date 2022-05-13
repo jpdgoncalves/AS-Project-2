@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 public class TProducer extends Thread{
     private Properties properties;
@@ -43,7 +44,6 @@ public class TProducer extends Thread{
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
             producer.send(producerRecord);
 
-            throw new RuntimeException(e);
         }finally {
             producer.close();
         }

@@ -45,7 +45,7 @@ public class PConsumer{
         props3.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props3.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         //records can be reprocessed :
-        props3.put("auto.commit.interval.ms", "5000");
+        props3.put("auto.commit.interval.ms", "2000");
 
 
         //Group 1
