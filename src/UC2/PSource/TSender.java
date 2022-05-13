@@ -53,6 +53,6 @@ public class TSender extends Thread {
     }
 
     private void log(String msg) {
-        System.out.println("Sender thread " + this.getId() + ": " + msg);
+        System.out.println("[Sender thread " + this.getId() + "]: " + msg);
     }
 }

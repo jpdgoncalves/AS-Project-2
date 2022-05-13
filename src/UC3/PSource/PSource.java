@@ -9,14 +9,17 @@ public class PSource {
 
     public static void main(String[] args) throws IOException {
 
-        SensorReader sensorReader = new SensorReader("sensor.txt");
+        DataBufferMap buffers = new DataBufferMap();
         ServerSocket serverSocket = new ServerSocket(PSOURCE_PORT);
 
         System.out.println("PSource process is running!");
+        TReader tReader = new TReader("sensor.txt", buffers);
+        tReader.start();
+
         while (true) {
             Socket socket = serverSocket.accept();
             System.out.println("Accepted a new socket connection! Starting thread...");
-            (new TSender(socket, sensorReader)).start();
+            (new TSender(socket, buffers)).start();
         }
 
     }
