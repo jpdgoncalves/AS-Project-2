@@ -4,14 +4,31 @@ import org.apache.kafka.common.TopicPartition;
 
 import java.util.*;
 
+
+/**
+ * Class in which consumers are managed
+ */
 public class PConsumer{
 
-    private static float [] results_min = {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE};
-    private static float [] results_max = {-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE};
+    /**
+     * Each group put the minimum temperature found at the position corresponding to his number
+     */
+    private static float [] results_min;
 
+    /**
+     * Each group put the maximum temperature found at the position corresponding to his number
+     */
+    private static float [] results_max;
+
+    /**
+     * Number of groups having put their max and min temperature
+     */
     private static int added = 0;
 
     public static void main(String[] args) {
+        /**
+         * First group properties
+         */
         String topicName = "sensor";
         String groupName = "firstGroup";
 
@@ -24,6 +41,9 @@ public class PConsumer{
         props.put("auto.commit.interval.ms", "5000");
 
 
+        /**
+         * Second group properties
+         */
         String topicName2 = "sensor";
         String groupName2 = "sndGroup";
 
@@ -36,6 +56,9 @@ public class PConsumer{
         props2.put("auto.commit.interval.ms", "5000");
 
 
+        /**
+         * Third group properties
+         */
         String topicName3 = "sensor";
         String groupName3 = "trdGroup";
 
@@ -48,7 +71,9 @@ public class PConsumer{
         props3.put("auto.commit.interval.ms", "2000");
 
 
-        //Group 1
+        /**
+         * Adding consumers in group 1
+         */
         TConsumer consumers[] = new TConsumer[3];
         for (int i=0; i<3; i++){
             TopicPartition topicPartition = new TopicPartition(topicName, i);
@@ -58,7 +83,9 @@ public class PConsumer{
             consumers[i].start();
         }
 
-        //Group 2
+        /**
+         * Adding consumers in group 2
+         */
         TConsumer consumers2[] = new TConsumer[3];
         for (int i=0; i<3; i++){
             TopicPartition topicPartition2 = new TopicPartition(topicName2, i);
@@ -68,7 +95,9 @@ public class PConsumer{
             consumers2[i].start();
         }
 
-        //Group 3
+        /**
+         * Adding consumers in group 3
+         */
         TConsumer consumers3[] = new TConsumer[3];
         for (int i=0; i<3; i++){
             TopicPartition topicPartition3 = new TopicPartition(topicName3, i);
@@ -82,36 +111,32 @@ public class PConsumer{
 
     }
 
+    /**
+     * To write the maximum and minimum temperature voted on votingSystem()
+     * @param groupNumber the group number on whoch the values are going to be added
+     * @param result_min the minimum temperature value found
+     * @param result_max the maximum temperature value found
+     */
     public static void writeResults(int groupNumber, float result_min, float result_max){
-        //System.out.println("hello");
-        //if (results_min[groupNumber] > result_min ){
-            results_min[groupNumber] = result_min;
-        //}
+        results_min[groupNumber] = result_min;
 
-        //if (results_max[groupNumber] < result_max){
-            results_max[groupNumber] = result_max;
-        //}
+        results_max[groupNumber] = result_max;
 
         added ++;
-        //System.out.println("Added ++  -" + added);
         if (added == 3){
-            System.out.println("Going to vote rn");
+            System.out.println("Going to vote right now");
             votingSystem();
         }
-
-
     }
 
+    /**
+     * To vote on the maximum and minimum temperature found
+     */
     private static void votingSystem(){
-
         float finalResultMin = -1;
         float finalResultMax = -1;
 
-
         for (int i = 0; i < results_min.length; i++){
-
-            //System.out.println("results min - "+ results_min[i]);
-
             int equals = 0;
 
             for (int j = 0; j < results_min.length; j++){
@@ -122,13 +147,10 @@ public class PConsumer{
 
             if (equals >= 2){
                 finalResultMin = results_min[i];
-
             }
-
         }
 
         for (int i = 0; i < results_max.length; i++){
-
             int equals = 0;
 
             for (int j = 0; j < results_max.length; j++){
@@ -139,19 +161,11 @@ public class PConsumer{
 
             if (equals >= 2){
                 finalResultMax = results_max[i];
-
             }
-
         }
 
         System.out.println("Final results (if -1 -> error)");
         System.out.println("Min - " + finalResultMin);
         System.out.println("Max - " + finalResultMax);
-
-
-
-
     }
-
-
 }

@@ -10,10 +10,24 @@ import java.util.Properties;
 
 import static java.lang.Float.*;
 
+/**
+ * Consumer thread generated from PProducer
+ */
 public class TConsumer extends Thread{
+
+    /**
+     * The properties of the TConsumer
+     */
     private Properties properties;
+
+    /**
+     * The Kafka TConsumer
+     */
     private KafkaConsumer<String, String> consumer;
 
+    /**
+     * The list of partitions from which the consumer is going to read
+     */
     private List<TopicPartition> topicPartitions;
 
     private boolean stillRunning = true;
@@ -22,26 +36,24 @@ public class TConsumer extends Thread{
     private float max_temp = 0;
     private int groupNumber;
 
-
-
-    private String topicName;
-
-    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions, int groupNumber){
+    /**
+     * Constructor
+     * @param properties The properties of the TConsumer we create
+     * @param topicPartitions The list of partitions from which the consumer is going to read
+     */
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
-        //this.topicName = newTopic;
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
-
-
     }
 
+    /**
+     * The routine that will be done by each Consumer thread
+     */
     @Override
     public void run() {
-        //consumer.subscribe(Arrays.asList(topicName));
         consumer.assign(topicPartitions);
-
-
 
         System.out.println("consumer begins !");
         while(stillRunning){
@@ -50,9 +62,6 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
-
-                //System.out.println("nr 3???? - " + record.value().split(" ")[1].split("=")[1]);
-
 
                 if (record.value().split(" ").length != 1) {
                     float curr_temp = parseFloat(record.value().split(" ")[1].split("=")[1]);
@@ -64,15 +73,9 @@ public class TConsumer extends Thread{
                         max_temp = curr_temp;
                     }
                 } else {
-
-
-
                     stillRunning = false;
-
                 }
-
             }
-
         }
 
         System.out.println(groupNumber + " - Min temp is " + min_temp);
