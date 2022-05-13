@@ -1,9 +1,11 @@
 package UC2.PConsumer;
 
+import UC2.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -27,15 +29,19 @@ public class TConsumer extends Thread{
      */
     private List<TopicPartition> topicPartitions;
 
+    private UpdateGUI consumergui;
+
     /**
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param topicPartitions The list of partitions from which the consumer is going to read
+     * @param consumergui The consumer GUI for the consumer group
      */
-    public TConsumer(Properties properties, List <TopicPartition> topicPartitions){
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, UpdateGUI consumergui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
+        this.consumergui = consumergui;
     }
 
     /**
@@ -48,8 +54,10 @@ public class TConsumer extends Thread{
         System.out.println("consumer begins !");
         while(true){
             ConsumerRecords<String,String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records)
+            for (ConsumerRecord<String, String> record : records){
                 System.out.println("Receive message : " + record.value());
+                consumergui.sendInfo(record.value());
+            }
         }
     }
 }
