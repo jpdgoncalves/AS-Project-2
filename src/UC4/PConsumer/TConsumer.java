@@ -8,25 +8,42 @@ import org.apache.kafka.common.TopicPartition;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Consumer thread generated from PProducer
+ */
 public class TConsumer extends Thread{
+
+    /**
+     * The properties of the TConsumer
+     */
     private Properties properties;
+
+    /**
+     * The Kafka TConsumer
+     */
     private KafkaConsumer<String, String> consumer;
 
+    /**
+     * The list of partitions from which the consumer is going to read
+     */
     private List<TopicPartition> topicPartitions;
 
-    private String topicName;
-
-    public TConsumer(Properties properties/*, String newTopic*/, List <TopicPartition> topicPartitions){
+    /**
+     * Constructor
+     * @param properties The properties of the TConsumer we create
+     * @param topicPartitions The list of partitions from which the consumer is going to read
+     */
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
-        //this.topicName = newTopic;
         this.topicPartitions = topicPartitions;
-
     }
 
+    /**
+     * The routine that will be done by each Consumer thread
+     */
     @Override
     public void run() {
-        //consumer.subscribe(Arrays.asList(topicName));
         consumer.assign(topicPartitions);
 
         System.out.println("consumer begins !");
