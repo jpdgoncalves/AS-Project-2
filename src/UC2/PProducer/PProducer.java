@@ -41,7 +41,6 @@ public class PProducer{
         for (int i=0; i<6; i++){
             //Socket attributes
             Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
             producers[i] = (new TProducer(props, in));

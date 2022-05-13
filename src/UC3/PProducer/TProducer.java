@@ -9,19 +9,37 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Properties;
 
+/**
+ * Producer thread generated from PProducer
+ */
 public class TProducer extends Thread{
+
+    /**
+     * The properties of the TProducer
+     */
     private Properties properties;
+
+    /**
+     * The topicName to which the TProducer will write
+     */
     private String topicName = "sensor";
     private String key = "key";
     private String value = "";
-
     private ObjectInputStream in;
 
+    /**
+     * Constructor
+     * @param properties the properties of the TProducer we create
+     * @param newIn the ObjectInputStream used for reading the sensor data from PSource
+     */
     public TProducer(Properties properties, ObjectInputStream newIn){
         this.properties = properties;
         this.in = newIn;
     }
 
+    /**
+     * The routine that will be done by each Producer thread
+     */
     @Override
     public void run() {
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
@@ -42,6 +60,5 @@ public class TProducer extends Thread{
         }finally {
             producer.close();
         }
-
     }
 }

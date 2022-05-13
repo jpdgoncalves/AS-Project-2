@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Class in which consumers are managed
+ */
 public class PConsumer{
 
     public static void main(String[] args) {
@@ -22,6 +25,9 @@ public class PConsumer{
         props.put("auto.commit.interval.ms", "5000");
 
 
+        /**
+         * Starting 3 consumer threads as requested in the assignment
+         */
         TConsumer consumers[] = new TConsumer[3];
         for (int i=0; i<3; i++){
             TopicPartition topicPartition = new TopicPartition(topicName, i);
@@ -30,8 +36,5 @@ public class PConsumer{
             consumers[i] = new TConsumer(props, asList);
             consumers[i].start();
         }
-
     }
-
-
 }
