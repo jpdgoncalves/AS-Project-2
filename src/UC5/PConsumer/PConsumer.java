@@ -20,6 +20,8 @@ public class PConsumer{
         props.put("group.id", groupName);
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        //records can be reprocessed :
+        props.put("auto.commit.interval.ms", "5000");
 
 
         String topicName2 = "sensor";
@@ -30,6 +32,8 @@ public class PConsumer{
         props2.put("group.id", groupName2);
         props2.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props2.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        //records can be reprocessed :
+        props2.put("auto.commit.interval.ms", "5000");
 
 
         String topicName3 = "sensor";
@@ -40,6 +44,8 @@ public class PConsumer{
         props3.put("group.id", groupName3);
         props3.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props3.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        //records can be reprocessed :
+        props3.put("auto.commit.interval.ms", "5000");
 
 
         //Group 1

@@ -23,6 +23,11 @@ public class PConsumer{
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
+        //in case a kafka consumer crashes (=consumer idle more than 10 seconds), connection is closed
+        props.put("connections.max.idle.ms", "10000");
+        //records can be reprocessed :
+        props.put("auto.commit.interval.ms", "2000");
+
 
 
 
