@@ -7,10 +7,10 @@ import java.net.Socket;
 public class TSender extends Thread {
 
     private final ObjectOutputStream out;
-    private final SensorReader sensorReader;
+    private final DataBufferMap buffers;
 
-    public TSender(Socket sendSocket, SensorReader sensorReader) throws IOException {
-        this.sensorReader = sensorReader;
+    public TSender(Socket sendSocket, DataBufferMap dataBuffer) throws IOException {
+        this.buffers = dataBuffer;
         this.out = new ObjectOutputStream(sendSocket.getOutputStream());
 
         setDaemon(true);
@@ -21,7 +21,7 @@ public class TSender extends Thread {
         this.log("Started!");
 
         try {
-            String sensorId = sensorReader.getSensorId();
+            String sensorId = buffers.getSensorId();
             SensorData data;
 
             if (sensorId == null) {
@@ -30,17 +30,17 @@ public class TSender extends Thread {
             }
 
 
-            while ((data = sensorReader.getData(sensorId)) != null) {
+            while ((data = buffers.getData(sensorId)) != null) {
                 this.log("Sending " + data);
                 this.out.writeObject(data);
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             cleanup();
         }
 
-        this.log("Finished!");
+        this.log("Ended!");
     }
 
     private void cleanup() {
