@@ -1,5 +1,6 @@
 package UC5.PConsumer;
 
+import UC5.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -36,16 +37,19 @@ public class TConsumer extends Thread{
     private float max_temp = 0;
     private int groupNumber;
 
+    private UpdateGUI consumergui;
+
     /**
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param topicPartitions The list of partitions from which the consumer is going to read
      */
-    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber){
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, UpdateGUI consumergui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
+        this.consumergui = consumergui;
     }
 
     /**
@@ -62,6 +66,7 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
+                consumergui.sendInfo(record.value());
 
                 if (record.value().split(" ").length != 1) {
                     float curr_temp = parseFloat(record.value().split(" ")[1].split("=")[1]);
@@ -80,6 +85,8 @@ public class TConsumer extends Thread{
 
         System.out.println(groupNumber + " - Min temp is " + min_temp);
         System.out.println("Max temp is " + max_temp);
+        consumergui.sendInfo("The maximum temperature recorded was " + max_temp);
+        consumergui.sendInfo("The minimum temperature recorded was " + min_temp);
 
         PConsumer.writeResults(groupNumber, min_temp, max_temp);
     }
