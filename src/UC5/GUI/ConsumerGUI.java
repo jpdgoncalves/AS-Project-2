@@ -1,18 +1,18 @@
-package UC1.GUI;
+package UC5.GUI;
 
 import javax.swing.*;
 import java.io.IOException;
 
-public class ProducerGUI {
+public class ConsumerGUI {
 
     private JPanel contentPane;
     private JTextArea textArea;
 
     private JFrame frame;
 
-    public ProducerGUI(){
+    public ConsumerGUI(){
 
-        frame = new JFrame("Producer GUI");
+        frame = new JFrame("Consumer GUI");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

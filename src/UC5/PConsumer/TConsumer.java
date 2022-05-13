@@ -1,10 +1,12 @@
 package UC5.PConsumer;
 
+import UC5.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,6 +23,7 @@ public class TConsumer extends Thread{
     private float min_temp = 0;
     private float max_temp = 0;
     private int groupNumber;
+    private UpdateGUI consumergui;
 
 
 
@@ -38,6 +41,15 @@ public class TConsumer extends Thread{
 
     @Override
     public void run() {
+
+        try {
+            consumergui = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         //consumer.subscribe(Arrays.asList(topicName));
         consumer.assign(topicPartitions);
 
@@ -50,6 +62,7 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
+                consumergui.sendInfo(record.value());
 
                 //System.out.println("nr 3???? - " + record.value().split(" ")[1].split("=")[1]);
 
@@ -64,11 +77,7 @@ public class TConsumer extends Thread{
                         max_temp = curr_temp;
                     }
                 } else {
-
-
-
                     stillRunning = false;
-
                 }
 
             }
@@ -77,6 +86,8 @@ public class TConsumer extends Thread{
 
         System.out.println(groupNumber + " - Min temp is " + min_temp);
         System.out.println("Max temp is " + max_temp);
+        consumergui.sendInfo("The maximum temperature recorded was " + max_temp);
+        consumergui.sendInfo("The minimum temperature recorded was " + min_temp);
 
         PConsumer.writeResults(groupNumber, min_temp, max_temp);
     }

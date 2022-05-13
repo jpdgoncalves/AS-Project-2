@@ -1,5 +1,6 @@
 package UC1.PProducer;
 
+import UC1.GUI.UpdateGUI;
 import UC1.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -17,6 +18,8 @@ public class TProducer extends Thread{
     private String key = "key";
     private String value = "";
 
+    private UpdateGUI producergui;
+
     private ObjectInputStream in;
 
     public TProducer(Properties properties, ObjectInputStream newIn){
@@ -26,6 +29,15 @@ public class TProducer extends Thread{
 
     @Override
     public void run() {
+
+        try {
+            producergui = new UpdateGUI("P");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
 
         System.out.println("producer sent record to topic !!");
@@ -39,6 +51,7 @@ public class TProducer extends Thread{
                     ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
                     producer.send(producerRecord);
                     System.out.println("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
+                    producergui.sendInfo("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
                 }
                 else
                     break;

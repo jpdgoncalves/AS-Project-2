@@ -1,4 +1,4 @@
-package UC1.GUI;
+package UC2.GUI;
 
 import javax.swing.*;
 import java.io.IOException;

@@ -1,12 +1,16 @@
 package UC6.PConsumer;
 
+import UC6.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
+import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import static java.lang.Float.parseFloat;
 
@@ -20,7 +24,14 @@ public class TConsumer extends Thread{
 
     private float sum_temps = 0;
     private int count_temps = 0;
+    private int aux = 0;
+
+    private UpdateGUI consumergui;
+
     private int groupNumber;
+
+
+    private Set<String> data = new LinkedHashSet<String>();
 
 
 
@@ -37,6 +48,15 @@ public class TConsumer extends Thread{
 
     @Override
     public void run() {
+
+        try {
+            consumergui = new UpdateGUI("C");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         consumer.assign(topicPartitions);
 
         System.out.println("consumer begins !");
@@ -46,6 +66,8 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
+                consumergui.sendInfo(record.value());
+
 
 
                 if (record.value().split(" ").length != 1) {
@@ -54,12 +76,24 @@ public class TConsumer extends Thread{
                     sum_temps += curr_temp;
                     count_temps ++;
 
+                    if (data.contains(record.value().split(" ")[2].split("=")[1]) == false){
+                        data.add(record.value().split(" ")[2].split("=")[1]);
+                    } else {
+
+                        System.out.println("I AM RECEIVING DUPLICATES PLZ FIX");
+                        aux ++;
+                    }
+
                 } else {
 
                     stillRunning = false;
 
                     sum_temps = sum_temps / count_temps;
                     System.out.println("The average temperature is " + sum_temps);
+                    consumergui.sendInfo("The average temperature is " + sum_temps);
+
+                    System.out.println("Aux - " + aux);
+                    System.out.println("nr - " + count_temps);
 
                 }
 
