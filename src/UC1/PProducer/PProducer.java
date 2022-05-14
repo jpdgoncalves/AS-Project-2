@@ -1,5 +1,7 @@
 package UC1.PProducer;
 
+import UC1.GUI.NewGui;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Properties;
@@ -21,6 +23,10 @@ public class PProducer{
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        NewGui gui = new NewGui(1);
+
+        gui.setVisible(true);
+
         //Socket attributes
         Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
         ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
@@ -40,7 +46,7 @@ public class PProducer{
         props.put("max.in.flight.requests.per.connection", "1");
 
         //Start the producer thread
-        (new TProducer(props, in)).start();
+        (new TProducer(props, in, gui)).start();
 
     }
 

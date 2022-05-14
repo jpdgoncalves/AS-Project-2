@@ -1,5 +1,7 @@
 package UC1.PConsumer;
 
+import UC1.GUI.NewGui;
+
 import java.util.Properties;
 
 /**
@@ -8,6 +10,9 @@ import java.util.Properties;
 public class PConsumer{
 
     public static void main(String[] args) {
+        NewGui gui = new NewGui(6);
+        gui.setVisible(true);
+
         String topicName = "sensor";
         String groupName = "firstGroup";
 
@@ -17,7 +22,7 @@ public class PConsumer{
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        TConsumer consumer = new TConsumer(props, topicName);
+        TConsumer consumer = new TConsumer(props, topicName, gui);
         consumer.start();
     }
 }
