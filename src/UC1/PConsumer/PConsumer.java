@@ -10,7 +10,7 @@ import java.util.Properties;
 public class PConsumer{
 
     public static void main(String[] args) {
-        NewGui gui = new NewGui(6);
+        NewGui gui = new NewGui(1);
         gui.setVisible(true);
 
         String topicName = "sensor";

@@ -63,7 +63,7 @@ public class TConsumer extends Thread{
         while(true){
             ConsumerRecords<String,String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records){
-                System.out.println("Receive message : " + record.value());
+                // System.out.println("Receive message : " + record.value());
                 gui.sendInfo("000001", record.value());
             }
         }
