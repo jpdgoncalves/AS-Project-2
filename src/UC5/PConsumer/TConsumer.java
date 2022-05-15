@@ -43,6 +43,8 @@ public class TConsumer extends Thread{
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param topicPartitions The list of partitions from which the consumer is going to read
+     * @param groupNumber The number of the consumer group.
+     * @param gui The GUI where the records will be displayed.
      */
     public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, NewGui gui){
         this.properties = properties;

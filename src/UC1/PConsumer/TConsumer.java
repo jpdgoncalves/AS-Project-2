@@ -37,6 +37,7 @@ public class TConsumer extends Thread{
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param newTopic The name of the topic the consumer will subscribe to
+     * @param gui The gui where the records will be displayed.
      */
     public TConsumer(Properties properties, String newTopic, NewGui gui){
         this.properties = properties;

@@ -36,6 +36,7 @@ public class TProducer extends Thread{
      * Constructor
      * @param properties the properties of the TProducer we create
      * @param newIn the ObjectInputStream used for reading the sensor data from PSource
+     * @param gui The GUI where the records will be displayed.
      */
     public TProducer(Properties properties, ObjectInputStream newIn, NewGui gui){
         this.properties = properties;

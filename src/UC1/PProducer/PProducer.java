@@ -23,9 +23,8 @@ public class PProducer{
 
     /**
      * The main method invoked starting the PProducer process
-     * @param args
+     * @param args Arguments passed through the command line.
      * @throws IOException if problem with ObjectInputStream
-     * @throws ClassNotFoundException
      */
     public static void main(String[] args) throws IOException {
         NewGui gui = new NewGui("Producer GUI", 6);

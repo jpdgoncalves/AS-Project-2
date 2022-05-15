@@ -11,7 +11,7 @@ public class PConsumer{
 
     /**
      * The main method invoked starting the PConsumer process
-     * @param args
+     * @param args Arguments passed through the command line.
      */
     public static void main(String[] args) {
         NewGui gui = new NewGui("Consumer GUI", 6);
