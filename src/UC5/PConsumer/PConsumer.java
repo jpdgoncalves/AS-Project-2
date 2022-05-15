@@ -1,10 +1,8 @@
 package UC5.PConsumer;
 
 import UC5.GUI.NewGui;
-import UC5.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -28,11 +26,8 @@ public class PConsumer{
      */
     private static int added = 0;
 
-    // private static UpdateGUI consumergui0;
     private final static NewGui consumergui0 = new NewGui("Consumer GUI 0", 6);
-    // private static UpdateGUI consumergui1;
     private final static NewGui consumergui1 = new NewGui("Consumer GUI 1", 6);
-    // private static UpdateGUI consumergui2;
     private final static NewGui consumergui2 = new NewGui("Consumer GUI 2", 6);
 
     public static void main(String[] args) {
@@ -56,15 +51,6 @@ public class PConsumer{
         props.put("auto.commit.interval.ms", "5000");
 
 
-        /*try {
-            consumergui0 = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
-
-
         /**
          * Second group properties
          */
@@ -78,14 +64,6 @@ public class PConsumer{
         //records can be reprocessed :
         props2.put("auto.commit.interval.ms", "5000");
 
-        /*try {
-            consumergui1 = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
-
         /**
          * Third group properties
          */
@@ -98,14 +76,6 @@ public class PConsumer{
         props3.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         //records can be reprocessed :
         props3.put("auto.commit.interval.ms", "2000");
-
-        /*try {
-            consumergui2 = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
 
         /**
          * Adding consumers in group 1

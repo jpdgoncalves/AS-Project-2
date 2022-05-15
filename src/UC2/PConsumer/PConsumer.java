@@ -1,10 +1,8 @@
 package UC2.PConsumer;
 
 import UC2.GUI.NewGui;
-import UC2.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -13,7 +11,7 @@ import java.util.Properties;
  * Class in which consumers are managed
  */
 public class PConsumer{
-    // private static UpdateGUI consumergui;
+
     private static NewGui gui = new NewGui("Consumer GUI", 6);
 
     /**
@@ -32,13 +30,6 @@ public class PConsumer{
 
         //records can be reprocessed
         props.put("auto.commit.interval.ms", "1000");
-        /*try {
-            consumergui = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
         gui.setVisible(true);
 
 

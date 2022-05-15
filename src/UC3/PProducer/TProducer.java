@@ -1,7 +1,6 @@
 package UC3.PProducer;
 
 import UC3.GUI.NewGui;
-import UC3.GUI.UpdateGUI;
 import UC3.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -28,7 +27,6 @@ public class TProducer extends Thread{
     private String key = "key";
     private String value = "";
     private ObjectInputStream in;
-    // private UpdateGUI producergui;
     private final NewGui gui;
 
     /**
@@ -47,14 +45,6 @@ public class TProducer extends Thread{
      */
     @Override
     public void run() {
-
-        /*try {
-            producergui = new UpdateGUI("P");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
 
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
 

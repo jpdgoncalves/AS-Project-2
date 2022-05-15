@@ -1,10 +1,8 @@
 package UC6.PConsumer;
 
 import UC6.GUI.NewGui;
-import UC6.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -29,7 +27,6 @@ public class PConsumer {
      */
     private static int added = 0;
 
-    // private static UpdateGUI consumergui;
     private static final NewGui gui = new NewGui("Consumer GUI", 6);
 
     public static void main(String[] args) {
@@ -42,13 +39,6 @@ public class PConsumer {
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        /*try {
-            consumergui = new UpdateGUI("C");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
         gui.setVisible(true);
 
         /**

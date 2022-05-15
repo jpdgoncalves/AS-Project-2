@@ -1,7 +1,6 @@
 package UC6.PConsumer;
 
 import UC6.GUI.NewGui;
-import UC6.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -37,7 +36,6 @@ public class TConsumer extends Thread{
     private int count_temps = 0;
     private int groupNumber;
 
-    // private UpdateGUI consumergui;
     private final NewGui gui;
 
     /**

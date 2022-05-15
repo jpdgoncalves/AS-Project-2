@@ -1,7 +1,6 @@
 package UC6.PProducer;
 
 import UC6.GUI.NewGui;
-import UC6.GUI.UpdateGUI;
 import UC6.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -10,7 +9,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Producer thread generated from PProducer
@@ -32,7 +30,6 @@ public class TProducer extends Thread{
 
     private ObjectInputStream in;
 
-    // private UpdateGUI producergui;
     private final NewGui gui;
 
     /**
@@ -50,14 +47,6 @@ public class TProducer extends Thread{
      */
     @Override
     public void run() {
-
-        /*try {
-            producergui = new UpdateGUI("P");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
 
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
 

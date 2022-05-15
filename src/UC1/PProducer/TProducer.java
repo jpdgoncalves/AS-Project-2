@@ -1,7 +1,6 @@
 package UC1.PProducer;
 
 import UC1.GUI.NewGui;
-import UC1.GUI.UpdateGUI;
 import UC1.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -26,7 +25,6 @@ public class TProducer extends Thread{
      */
     private String topicName = "sensor";
 
-    //private UpdateGUI producergui;
     private final NewGui gui;
 
     private String key = "key";

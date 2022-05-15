@@ -1,7 +1,6 @@
 package UC2.PConsumer;
 
 import UC2.GUI.NewGui;
-import UC2.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -30,7 +29,6 @@ public class TConsumer extends Thread{
      */
     private List<TopicPartition> topicPartitions;
 
-    // private UpdateGUI consumergui;
     private NewGui gui;
 
     /**
