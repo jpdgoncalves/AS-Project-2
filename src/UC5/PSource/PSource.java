@@ -13,7 +13,7 @@ public class PSource {
 
     /**
      * The main method invoked starting the PSource process
-     * @param args
+     * @param args Arguments passed through the command line.
      * @throws IOException If the sensor data file couldn't be read.
      * @throws InterruptedException If any of the threads are interrupted.
      */
