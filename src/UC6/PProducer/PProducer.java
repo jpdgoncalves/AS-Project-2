@@ -1,5 +1,7 @@
 package UC6.PProducer;
 
+import UC6.GUI.NewGui;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -22,6 +24,9 @@ public class PProducer{
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        NewGui gui = new NewGui("Producer GUI", 6);
+        gui.setVisible(true);
+
         TProducer producers[] = new TProducer[6];
 
         Properties props = new Properties();
@@ -38,7 +43,7 @@ public class PProducer{
             Socket clientSocket = new Socket(IP_ADDRESS, PSOURCE_PORT);
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
-            producers[i] = (new TProducer(props, in));
+            producers[i] = (new TProducer(props, in, gui));
             producers[i].start();
         }
     }

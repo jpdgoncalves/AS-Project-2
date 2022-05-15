@@ -1,5 +1,6 @@
 package UC5.PConsumer;
 
+import UC5.GUI.NewGui;
 import UC5.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -37,19 +38,20 @@ public class TConsumer extends Thread{
     private float max_temp = 0;
     private int groupNumber;
 
-    private UpdateGUI consumergui;
+    // private UpdateGUI consumergui;
+    private final NewGui gui;
 
     /**
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param topicPartitions The list of partitions from which the consumer is going to read
      */
-    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, UpdateGUI consumergui){
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, NewGui gui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
-        this.consumergui = consumergui;
+        this.gui = gui;
     }
 
     /**
@@ -66,7 +68,8 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
-                consumergui.sendInfo(record.value());
+                // consumergui.sendInfo(record.value());
+                gui.sendInfo(record.value());
 
                 if (record.value().split(" ").length != 1) {
                     float curr_temp = parseFloat(record.value().split(" ")[1].split("=")[1]);
@@ -85,8 +88,8 @@ public class TConsumer extends Thread{
 
         System.out.println(groupNumber + " - Min temp is " + min_temp);
         System.out.println("Max temp is " + max_temp);
-        consumergui.sendInfo("The maximum temperature recorded was " + max_temp);
-        consumergui.sendInfo("The minimum temperature recorded was " + min_temp);
+        gui.sendInfo("id=00000" + (groupNumber + 1) + " The maximum temperature recorded was " + max_temp);
+        gui.sendInfo("id=00000" + (groupNumber + 1) + "The minimum temperature recorded was " + min_temp);
 
         PConsumer.writeResults(groupNumber, min_temp, max_temp);
     }

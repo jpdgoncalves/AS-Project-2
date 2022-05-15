@@ -1,5 +1,6 @@
 package UC5.PConsumer;
 
+import UC5.GUI.NewGui;
 import UC5.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
@@ -27,11 +28,17 @@ public class PConsumer{
      */
     private static int added = 0;
 
-    private static UpdateGUI consumergui0;
-    private static UpdateGUI consumergui1;
-    private static UpdateGUI consumergui2;
+    // private static UpdateGUI consumergui0;
+    private final static NewGui consumergui0 = new NewGui("Consumer GUI 0", 6);
+    // private static UpdateGUI consumergui1;
+    private final static NewGui consumergui1 = new NewGui("Consumer GUI 1", 6);
+    // private static UpdateGUI consumergui2;
+    private final static NewGui consumergui2 = new NewGui("Consumer GUI 2", 6);
 
     public static void main(String[] args) {
+        consumergui0.setVisible(true);
+        consumergui1.setVisible(true);
+        consumergui2.setVisible(true);
 
         String topicName = "sensor";
 
@@ -49,13 +56,13 @@ public class PConsumer{
         props.put("auto.commit.interval.ms", "5000");
 
 
-        try {
+        /*try {
             consumergui0 = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
 
         /**
@@ -71,13 +78,13 @@ public class PConsumer{
         //records can be reprocessed :
         props2.put("auto.commit.interval.ms", "5000");
 
-        try {
+        /*try {
             consumergui1 = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         /**
          * Third group properties
@@ -92,13 +99,13 @@ public class PConsumer{
         //records can be reprocessed :
         props3.put("auto.commit.interval.ms", "2000");
 
-        try {
+        /*try {
             consumergui2 = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         /**
          * Adding consumers in group 1
@@ -196,5 +203,15 @@ public class PConsumer{
         System.out.println("Final results (if -1 -> error)");
         System.out.println("Min - " + finalResultMin);
         System.out.println("Max - " + finalResultMax);
+
+        consumergui0.sendInfo("id=000006 Final results (if -1 -> error)");
+        consumergui0.sendInfo("id=000006 Min - " + finalResultMin);
+        consumergui0.sendInfo("id=000006 Max - " + finalResultMax);
+        consumergui1.sendInfo("id=000006 Final results (if -1 -> error)");
+        consumergui1.sendInfo("id=000006 Min - " + finalResultMin);
+        consumergui1.sendInfo("id=000006 Max - " + finalResultMax);
+        consumergui2.sendInfo("id=000006 Final results (if -1 -> error)");
+        consumergui2.sendInfo("id=000006 Min - " + finalResultMin);
+        consumergui2.sendInfo("id=000006 Max - " + finalResultMax);
     }
 }

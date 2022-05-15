@@ -1,5 +1,6 @@
 package UC3.PConsumer;
 
+import UC3.GUI.NewGui;
 import UC3.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
@@ -13,7 +14,8 @@ import java.util.Properties;
  */
 public class PConsumer{
 
-    private static UpdateGUI consumergui;
+    // private static UpdateGUI consumergui;
+    private static final NewGui gui = new NewGui("Consumer GUI", 6);
 
     public static void main(String[] args) {
         String topicName = "sensor";
@@ -28,13 +30,14 @@ public class PConsumer{
         //records can be reprocessed but avoiding some degree of reprocessing
         props.put("auto.commit.interval.ms", "5000");
 
-        try {
+        /*try {
             consumergui = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        gui.setVisible(true);
 
 
         /**
@@ -45,7 +48,7 @@ public class PConsumer{
             TopicPartition topicPartition = new TopicPartition(topicName, i);
             List<TopicPartition> asList = Arrays.asList(topicPartition);
 
-            consumers[i] = new TConsumer(props, asList, consumergui);
+            consumers[i] = new TConsumer(props, asList, gui);
             consumers[i].start();
         }
     }

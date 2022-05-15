@@ -1,5 +1,6 @@
 package UC5.PProducer;
 
+import UC5.GUI.NewGui;
 import UC5.GUI.UpdateGUI;
 import UC5.PSource.SensorData;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -29,16 +30,18 @@ public class TProducer extends Thread{
 
     private ObjectInputStream in;
 
-    private UpdateGUI producergui;
+    //private UpdateGUI producergui;
+    private final NewGui gui;
 
     /**
      * Constructor
      * @param properties the properties of the TProducer we create
      * @param newIn the ObjectInputStream used for reading the sensor data from PSource
      */
-    public TProducer(Properties properties, ObjectInputStream newIn){
+    public TProducer(Properties properties, ObjectInputStream newIn, NewGui gui){
         this.properties = properties;
         this.in = newIn;
+        this.gui = gui;
     }
 
     /**
@@ -47,13 +50,13 @@ public class TProducer extends Thread{
     @Override
     public void run() {
 
-        try {
+        /*try {
             producergui = new UpdateGUI("P");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
 
         Producer<String, String> producer = new KafkaProducer<>(this.properties);
@@ -68,7 +71,8 @@ public class TProducer extends Thread{
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>(this.topicName, this.key, this.value);
                 producer.send(producerRecord);
                 System.out.println("producer "+ this.getId() + "sent id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
-                producergui.sendInfo("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
+                // producergui.sendInfo("id=" + sensorData.getSensorId() + " temp=" + sensorData.getTemperature() + " time=" + sensorData.getTimestamp());
+                gui.sendInfo(value);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("I reached end of file and will respectfully inform the consumer of that fact");

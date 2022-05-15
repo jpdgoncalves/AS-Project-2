@@ -1,5 +1,6 @@
 package UC6.PConsumer;
 
+import UC6.GUI.NewGui;
 import UC6.GUI.UpdateGUI;
 import org.apache.kafka.common.TopicPartition;
 
@@ -11,7 +12,7 @@ import java.util.Properties;
 /**
  * Class in which consumers are managed
  */
-public class PConsumer{
+public class PConsumer {
 
     /**
      * Each group put the minimum temperature found at the position corresponding to his number
@@ -28,7 +29,8 @@ public class PConsumer{
      */
     private static int added = 0;
 
-    private static UpdateGUI consumergui;
+    // private static UpdateGUI consumergui;
+    private static final NewGui gui = new NewGui("Consumer GUI", 6);
 
     public static void main(String[] args) {
         String topicName = "sensor";
@@ -40,13 +42,14 @@ public class PConsumer{
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        try {
+        /*try {
             consumergui = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        gui.setVisible(true);
 
         /**
          * Starting 3 consumers
@@ -56,7 +59,7 @@ public class PConsumer{
             TopicPartition topicPartition = new TopicPartition(topicName, i);
             List<TopicPartition> asList = Arrays.asList(topicPartition);
 
-            consumers[i] = new TConsumer(props, asList, 0, consumergui);
+            consumers[i] = new TConsumer(props, asList, 0, gui);
             consumers[i].start();
         }
     }

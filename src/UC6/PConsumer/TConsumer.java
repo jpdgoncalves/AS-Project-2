@@ -1,5 +1,6 @@
 package UC6.PConsumer;
 
+import UC6.GUI.NewGui;
 import UC6.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -36,19 +37,20 @@ public class TConsumer extends Thread{
     private int count_temps = 0;
     private int groupNumber;
 
-    private UpdateGUI consumergui;
+    // private UpdateGUI consumergui;
+    private final NewGui gui;
 
     /**
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param topicPartitions The list of partitions from which the consumer is going to read
      */
-    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, UpdateGUI consumergui){
+    public TConsumer(Properties properties, List <TopicPartition> topicPartitions, int groupNumber, NewGui gui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicPartitions = topicPartitions;
         this.groupNumber = groupNumber;
-        this.consumergui = consumergui;
+        this.gui = gui;
     }
 
     /**
@@ -65,7 +67,7 @@ public class TConsumer extends Thread{
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Receive message : " + record.value());
-                consumergui.sendInfo(record.value());
+                gui.sendInfo(record.value());
 
                 if (record.value().split(" ").length != 1) {
                     float curr_temp = parseFloat(record.value().split(" ")[1].split("=")[1]);
@@ -78,7 +80,7 @@ public class TConsumer extends Thread{
 
                     sum_temps = sum_temps / count_temps;
                     System.out.println("The average temperature is " + sum_temps);
-                    consumergui.sendInfo("The average temperature is " + sum_temps);
+                    gui.sendInfo("id=000006 The average temperature is " + sum_temps);
 
                 }
             }
