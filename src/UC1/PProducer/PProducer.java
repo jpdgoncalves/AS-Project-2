@@ -23,7 +23,7 @@ public class PProducer{
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        NewGui gui = new NewGui(1);
+        NewGui gui = new NewGui("Producer GUI",6);
 
         gui.setVisible(true);
 

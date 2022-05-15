@@ -64,8 +64,15 @@ public class TConsumer extends Thread{
             ConsumerRecords<String,String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records){
                 // System.out.println("Receive message : " + record.value());
-                gui.sendInfo("000001", record.value());
+                String sensorId = parseSensorId(record.value());
+                gui.sendInfo(sensorId, record.value());
             }
         }
+    }
+
+    private String parseSensorId(String data) {
+        String unparsedId = data.split(" ")[0];
+
+        return unparsedId.replace("id=", "");
     }
 }
