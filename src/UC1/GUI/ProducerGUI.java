@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 /**
- * The GUI of the Producer
+ * The Producer's GUI
  */
 public class ProducerGUI {
     private JPanel contentPane;

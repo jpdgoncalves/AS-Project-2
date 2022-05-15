@@ -3,12 +3,18 @@ package UC1.GUI;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * The Consumer's GUI
+ */
 public class ConsumerGUI {
     private JPanel contentPane;
     private JTextArea textArea;
 
     private JFrame frame;
 
+    /**
+     * Constructor
+     */
     public ConsumerGUI(){
         frame = new JFrame("Consumer GUI");
         frame.setContentPane(contentPane);

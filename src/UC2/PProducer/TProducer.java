@@ -44,7 +44,6 @@ public class TProducer extends Thread{
      */
     @Override
     public void run() {
-
         try {
             producergui = new UpdateGUI("P");
         } catch (IOException e) {

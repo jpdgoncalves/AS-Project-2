@@ -14,6 +14,10 @@ import java.util.Properties;
 public class PConsumer{
     private static UpdateGUI consumergui;
 
+    /**
+     * The main method invoked starting the PConsumer process
+     * @param args
+     */
     public static void main(String[] args) {
         String topicName = "sensor";
         String groupName = "firstGroup";
