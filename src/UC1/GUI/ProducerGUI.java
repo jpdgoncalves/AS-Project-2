@@ -3,15 +3,19 @@ package UC1.GUI;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * The GUI of the Producer
+ */
 public class ProducerGUI {
-
     private JPanel contentPane;
     private JTextArea textArea;
 
     private JFrame frame;
 
+    /**
+     * Constructor
+     */
     public ProducerGUI(){
-
         frame = new JFrame("Producer GUI");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +27,6 @@ public class ProducerGUI {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         frame.add(scroll);
-
     }
 
     public void open() throws IOException, ClassNotFoundException {
@@ -31,11 +34,7 @@ public class ProducerGUI {
     }
 
     public void setContent(String content){
-
         textArea.setText(textArea.getText() + "\n" + content);
         textArea.updateUI();
-
     }
-
-
 }

@@ -21,8 +21,13 @@ public class PProducer{
      */
     public static final String IP_ADDRESS = "127.0.0.1";
 
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    /**
+     * The main method invoked starting the PProducer process
+     * @param args
+     * @throws IOException if problem with ObjectInputStream
+     * @throws ClassNotFoundException
+     */
+    public static void main(String[] args) throws IOException {
         NewGui gui = new NewGui("Producer GUI", 6);
         gui.setVisible(true);
 
@@ -46,8 +51,5 @@ public class PProducer{
 
         //Start the producer thread
         (new TProducer(props, in, gui)).start();
-
     }
-
-
 }

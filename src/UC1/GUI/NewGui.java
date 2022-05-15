@@ -5,6 +5,9 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ *
+ */
 public class NewGui extends JFrame {
 
     private final HashMap<String, ArrayList<String>> recordsMap = new HashMap<>();
@@ -38,6 +41,11 @@ public class NewGui extends JFrame {
      */
     private final HashMap<String, JScrollPane> scrollPanes = new HashMap<>();
 
+    /**
+     * Constructor
+     * @param title title of the GUI
+     * @param sensorCount number of sensors
+     */
     public NewGui(String title, int sensorCount) {
         super();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +60,7 @@ public class NewGui extends JFrame {
 
         addTotalRecordsPanel();
     }
+
 
     public void sendInfo(String info) {
         try {

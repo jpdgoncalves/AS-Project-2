@@ -9,6 +9,10 @@ import java.util.Properties;
  */
 public class PConsumer{
 
+    /**
+     * The main method invoked starting the PConsumer process
+     * @param args
+     */
     public static void main(String[] args) {
         NewGui gui = new NewGui("Consumer GUI", 6);
         gui.setVisible(true);

@@ -4,14 +4,12 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class ConsumerGUI {
-
     private JPanel contentPane;
     private JTextArea textArea;
 
     private JFrame frame;
 
     public ConsumerGUI(){
-
         frame = new JFrame("Consumer GUI");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,21 +21,14 @@ public class ConsumerGUI {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         frame.add(scroll);
-
-
     }
 
     public void open() throws IOException, ClassNotFoundException {
-
         frame.setVisible(true);
     }
 
     public void setContent(String content){
-
         textArea.setText(textArea.getText() + "\n" + content);
         textArea.updateUI();
-
     }
-
-
 }
