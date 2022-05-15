@@ -1,5 +1,6 @@
 package UC1.PConsumer;
 
+import UC1.GUI.NewGui;
 import UC1.GUI.UpdateGUI;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -29,17 +30,19 @@ public class TConsumer extends Thread{
      */
     private String topicName;
 
-    private UpdateGUI consumergui;
+    // private UpdateGUI consumergui;
+    private final NewGui gui;
 
     /**
      * Constructor
      * @param properties The properties of the TConsumer we create
      * @param newTopic The name of the topic the consumer will subscribe to
      */
-    public TConsumer(Properties properties, String newTopic){
+    public TConsumer(Properties properties, String newTopic, NewGui gui){
         this.properties = properties;
         this.consumer = new KafkaConsumer<>(this.properties);
         this.topicName = newTopic;
+        this.gui = gui;
     }
 
     /**
@@ -47,13 +50,13 @@ public class TConsumer extends Thread{
      */
     @Override
     public void run() {
-        try {
+        /*try {
             consumergui = new UpdateGUI("C");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         consumer.subscribe(Arrays.asList(topicName));
         System.out.println("consumer begins !");
@@ -61,7 +64,8 @@ public class TConsumer extends Thread{
             ConsumerRecords<String,String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records){
                 System.out.println("Receive message : " + record.value());
-                consumergui.sendInfo(record.value());
+                // consumergui.sendInfo(record.value());
+                gui.sendInfo(record.value());
             }
         }
     }
