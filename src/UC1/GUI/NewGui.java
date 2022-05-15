@@ -6,7 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- *
+ * GUI where the records and results are displayed
+ * The temperatures are separated by sensor id.
  */
 public class NewGui extends JFrame {
 
@@ -61,7 +62,12 @@ public class NewGui extends JFrame {
         addTotalRecordsPanel();
     }
 
-
+    /**
+     * Send new info into the gui. This
+     * method parses the data it receives to obtain
+     * the sensor id to which it needs to send it to
+     * @param info The data to display
+     */
     public void sendInfo(String info) {
         try {
             SwingUtilities.invokeAndWait(() -> {
@@ -73,6 +79,11 @@ public class NewGui extends JFrame {
         }
     }
 
+    /**
+     * Internal update routine for the gui
+     * @param sensorId The sensor id this info comes from
+     * @param info The info to display
+     */
     private void updateRoutine(String sensorId, String info) {
         JLabel title = sensorTitles.get(sensorId);
         JPanel panel = textPanes.get(sensorId);
@@ -99,6 +110,12 @@ public class NewGui extends JFrame {
         scrollPane.repaint();
     }
 
+    /**
+     * Internal method to add a column that will be
+     * used to display info for the sensor id passed
+     * as an argument.
+     * @param id The id of the sensor this column belongs to
+     */
     private void addSensorPane(int id) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -119,6 +136,12 @@ public class NewGui extends JFrame {
         add(panel);
     }
 
+    /**
+     * Create a panel where the text is actually displayed,
+     * populating it with enough space for 100 rows.
+     * @param sensorId The sensor id this panel.
+     * @return The populated JPanel
+     */
     private JPanel createLogPanel(String sensorId) {
         JPanel panel = new JPanel();
         Queue<JLabel> lQueue = new ArrayDeque<>();
@@ -135,10 +158,20 @@ public class NewGui extends JFrame {
         return panel;
     }
 
+    /**
+     * Adds the total records panel
+     * to the gui
+     */
     private void addTotalRecordsPanel() {
         add(totalRecords);
     }
 
+    /**
+     * Internal method to get the sensor id
+     * from a record string.
+     * @param data The record string to parse.
+     * @return The sensor id corresponding to this record.
+     */
     private String parseSensorId(String data) {
         String unparsedId = data.split(" ")[0];
 
